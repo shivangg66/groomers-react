@@ -24,7 +24,7 @@ class Login extends Component {
     async handleLogin(e) {
         e.preventDefault();
         if (this.handleValidation()) {
-            let res = await axios.post(`${process.env.MONGO_URL}//user/signup`, this.state.fields);
+            let res = await axios.post(`${process.env.MONGO_URL}//user/login`, this.state.fields);
             if (res.statusCode === 200) {
                 this.setState({ msg: 'Login Successful' });
             }
