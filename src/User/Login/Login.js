@@ -37,7 +37,11 @@ class Login extends Component {
     }
     handleChange(event) {
         const { name, value } = event.target;
-        this.setState({ fields: { [name]: value } });
+        this.setState(state => {
+            let fields = state.fields;
+            fields[`${name}`] = value;
+            return ({ fields: fields });
+        });
     }
     handleValidation() {
         let fields = this.state.fields;
