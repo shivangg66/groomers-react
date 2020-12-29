@@ -30,6 +30,7 @@ class Signup extends Component {
     async handleSignup(e) {
         e.preventDefault();
         if (this.handleValidation()) {
+            this.setState({ msg: "" });
             let res = await axios.post(`${process.env.MONGO_URL}//user/signup`, this.state.fields);
             if (res.statusCode === 200) {
                 this.setState({ msg: 'Login Successful' });
@@ -55,7 +56,7 @@ class Signup extends Component {
         let formIsValid = true;
         const regexDigits = /^[0-9]+$/;
         const regexEmail = /\S+@\S+\.\S+/;
-        const regexPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6-16}$/;
+        const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/;
 
 
         if (!fields["name"]) {

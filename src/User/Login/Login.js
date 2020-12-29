@@ -15,7 +15,7 @@ class Login extends Component {
                 <label htmlFor="Email/Mobile">Email/Mobile: </label>
                 <input id="Email/Mobile" name="id" type="text" onChange={this.handleChange} /><span style={{ color: "red" }}>{this.state.errors["id"]}</span><span></span>
                 <label htmlFor="Password">Password: </label>
-                <input id="Password" name="password" type="text" onChange={this.handleChange} /><span style={{ color: "red" }}>{this.state.errors["password"]}</span><span></span>
+                <input id="Password" name="password" type="password" onChange={this.handleChange} /><span style={{ color: "red" }}>{this.state.errors["password"]}</span><span></span>
                 <input type="button" value="Login" onClick={this.handleLogin} />
                 <span>{this.state.msg}</span>
             </form>
@@ -24,6 +24,7 @@ class Login extends Component {
     async handleLogin(e) {
         e.preventDefault();
         if (this.handleValidation()) {
+            this.setState({ msg: "" });
             let res = await axios.post(`${process.env.MONGO_URL}//user/login`, this.state.fields);
             if (res.statusCode === 200) {
                 this.setState({ msg: 'Login Successful' });
@@ -49,7 +50,7 @@ class Login extends Component {
         let formIsValid = true;
         const regexDigits = /^[0-9]+$/;
         const regexEmail = /\S+@\S+\.\S+/;
-        const regexPassword = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6-16}$/;
+        const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,1024}$/;
 
         //Mobile/Email
         if (!fields["id"]) {
